@@ -9,7 +9,7 @@ const NewIssuePage = () => {
       <TextField.Root>
         <TextField.Input placeholder="Title" />
       </TextField.Root>
-      <SimpleMDE />
+      <SimpleMDE placeholder="Description. . ." />
       <Button>Submit New Issue</Button>
     </div>
   );
