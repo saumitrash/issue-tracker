@@ -42,4 +42,8 @@ const IssuesPage = async () => {
   );
 };
 
+// without the line below it would be a static route
+// and won't show the updates because next caches everything for static routes
+export const dynamic = "force-dynamic";
+
 export default IssuesPage;
