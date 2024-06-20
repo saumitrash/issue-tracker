@@ -1,3 +1,4 @@
+"use client";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -5,6 +6,7 @@ import {
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { Button, Flex, Text } from "@radix-ui/themes";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -18,21 +20,50 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   if (totalPages === 0) {
     return null;
   }
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const changePage = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    router.push("?" + params.toString());
+  };
+
   return (
     <Flex align="center" gap="3">
       <Text>
         Page {currentPage} of {Math.ceil(itemCount / pageSize)}
       </Text>
-      <Button color="gray" variant="soft" disabled={currentPage === 1}>
+      <Button
+        onClick={() => changePage(1)}
+        color="gray"
+        variant="soft"
+        disabled={currentPage === 1}
+      >
         <DoubleArrowLeftIcon />
       </Button>
-      <Button color="gray" variant="soft" disabled={currentPage === 1}>
+      <Button
+        onClick={() => changePage(currentPage - 1)}
+        color="gray"
+        variant="soft"
+        disabled={currentPage === 1}
+      >
         <ArrowLeftIcon />
       </Button>
-      <Button color="gray" variant="soft" disabled={currentPage === totalPages}>
+      <Button
+        onClick={() => changePage(currentPage + 1)}
+        color="gray"
+        variant="soft"
+        disabled={currentPage === totalPages}
+      >
         <ArrowRightIcon />
       </Button>
-      <Button color="gray" variant="soft" disabled={currentPage === totalPages}>
+      <Button
+        onClick={() => changePage(totalPages)}
+        color="gray"
+        variant="soft"
+        disabled={currentPage === totalPages}
+      >
         <DoubleArrowRightIcon />
       </Button>
     </Flex>
