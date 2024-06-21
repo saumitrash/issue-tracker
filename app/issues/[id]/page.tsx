@@ -8,17 +8,22 @@ import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "../_components/AssigneeSelect";
+import { cache } from "react";
 
 interface Props {
   params: { id: string };
 }
 
-const IssueDetailPage = async ({ params }: Props) => {
-  const issue = await prisma.issue.findUnique({
+const fetchUsers = cache((issueId: number) => {
+  return prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: issueId,
     },
   });
+});
+
+const IssueDetailPage = async ({ params }: Props) => {
+  const issue = await fetchUsers(parseInt(params.id));
   const session = await getServerSession(authOptions);
 
   if (!issue) notFound();
@@ -42,11 +47,7 @@ const IssueDetailPage = async ({ params }: Props) => {
 };
 
 export async function generateMetadata({ params }: Props) {
-  const issue = await prisma.issue.findUnique({
-    where: {
-      id: parseInt(params.id),
-    },
-  });
+  const issue = await fetchUsers(parseInt(params.id));
 
   return {
     title: `Issue: ${issue?.title}`,
