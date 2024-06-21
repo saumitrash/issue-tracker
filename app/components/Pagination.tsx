@@ -15,6 +15,7 @@ interface Props {
 }
 
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
+  // comment for a deploy retrigger
   const router = useRouter();
   const searchParams = useSearchParams();
 
