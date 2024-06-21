@@ -5,7 +5,7 @@ import IssueChart from "./IssueChart";
 import { Flex, Grid } from "@radix-ui/themes";
 import { Metadata } from "next";
 
-export default async function Home() {
+async function getLatestIssues() {
   const counts = await prisma.issue.groupBy({
     by: ["status"],
     _count: true,
@@ -15,6 +15,12 @@ export default async function Home() {
     IN_PROGRESS: counts.find((c) => c.status === "IN_PROGRESS")?._count || 0,
     CLOSED: counts.find((c) => c.status === "CLOSED")?._count || 0,
   };
+
+  return countMap;
+}
+
+export default async function Home() {
+  const countMap = await getLatestIssues();
 
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="5">
@@ -34,6 +40,8 @@ export default async function Home() {
     </Grid>
   );
 }
+
+export const dynamic = "auto";
 
 export const metadata: Metadata = {
   title: "Issue Tracker Dashboard",
