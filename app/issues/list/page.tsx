@@ -4,6 +4,7 @@ import { Status } from "@prisma/client";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
 import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -51,5 +52,11 @@ const IssuesPage = async ({ searchParams }: Props) => {
 // without the line below it would be a static route
 // and won't show the updates because next caches everything for static routes
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "List of Issues ",
+  description: "View all the issues in a paginated format",
+  keywords: "home, issues",
+};
 
 export default IssuesPage;
