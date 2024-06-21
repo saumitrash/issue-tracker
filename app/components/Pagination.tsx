@@ -15,12 +15,13 @@ interface Props {
 }
 
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const totalPages = Math.ceil(itemCount / pageSize);
   if (totalPages === 0) {
     return null;
   }
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const changePage = (page: number) => {
     const params = new URLSearchParams(searchParams);

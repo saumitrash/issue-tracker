@@ -42,3 +42,12 @@ db_data/*
 
 # google secrets
 google_secrets.json
+
+# postgres data
+pg_data/*
+
+# secrets of any kind
+secrets.*
+
+# prod env
+.env.prod
