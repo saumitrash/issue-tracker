@@ -6,10 +6,11 @@ import React from "react";
 import { AiFillBug } from "react-icons/ai";
 import classnames from "classnames";
 // import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import {
   Avatar,
   Box,
+  Button,
   Container,
   DropdownMenu,
   Flex,
@@ -21,7 +22,7 @@ const NavBar = () => {
   return (
     <nav className="border-b mb-5 px-5 py-3">
       <Container>
-        <Flex justify="between">
+        <Flex justify="between" align="center">
           <Flex align={"center"} gap="2">
             <Link href="/">
               <AiFillBug />
@@ -40,9 +41,15 @@ const AuthStatus = () => {
   if (status === "loading") return <Skeleton width="3rem" />;
   if (status === "unauthenticated")
     return (
-      <Link className="nav-link" href="/api/auth/signin">
+      // the 'undefined' argument redirects page with all listed providers
+      // specifying something like 'google' will redirect straight to google sign in
+      <Button
+        variant="ghost"
+        size="3"
+        onClick={() => signIn(undefined, { callbackUrl: "/issues/list" })}
+      >
         Sign in
-      </Link>
+      </Button>
     );
   return (
     <Box>
@@ -62,7 +69,13 @@ const AuthStatus = () => {
             <DropdownMenu.Label>{session!.user?.email}</DropdownMenu.Label>
           </Text>
           <DropdownMenu.Item>
-            <Link href="/api/auth/signout">Sign out</Link>
+            <Button
+              variant="ghost"
+              className="hover:!text-white"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Sign out
+            </Button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
