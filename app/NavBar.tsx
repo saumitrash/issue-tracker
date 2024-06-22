@@ -71,7 +71,7 @@ const AuthStatus = () => {
           <DropdownMenu.Item>
             <Button
               variant="ghost"
-              className="hover:!text-white"
+              className="hover:!text-white w-full"
               onClick={() => signOut({ callbackUrl: "/" })}
             >
               Sign out
