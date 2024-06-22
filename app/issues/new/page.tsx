@@ -6,7 +6,7 @@ const IssueForm = dynamic(() => import("@/app/issues/_components/IssueForm"), {
 });
 
 const NewIssueForm = () => {
-  return <IssueForm />;
+  return <IssueForm formType="new" />;
 };
 
 export default NewIssueForm;
