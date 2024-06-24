@@ -21,7 +21,7 @@ const EditIssuePage = async ({ params }: Props) => {
 
   if (!issue) notFound();
 
-  return <IssueForm issue={issue} />;
+  return <IssueForm formType="update" issue={issue} />;
 };
 
 export default EditIssuePage;
